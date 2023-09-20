@@ -1,116 +1,89 @@
-import random
+class TicTacToe:
+    def __init__(self):
+        self.board = ["-", "-", "-",
+                      "-", "-", "-",
+                      "-", "-", "-"]
+        self.currentPlayer = "X"
+        self.winner = None
+        self.gameRunning = True
+
+    def print_board(self):
+        print(self.board[0] + " | " + self.board[1] + " | " + self.board[2])
+        print("---------")
+        print(self.board[3] + " | " + self.board[4] + " | " + self.board[5])
+        print("---------")
+        print(self.board[6] + " | " + self.board[7] + " | " + self.board[8])
+
+    def player_input(self):
+        inp = int(input("Select a spot 1-9: "))
+        if self.board[inp - 1] == "-":
+            self.board[inp - 1] = self.currentPlayer
+        else:
+            print("Oops, a player is already at that spot.")
+
+    def check_horizontal(self):
+        if self.board[0] == self.board[1] == self.board[2] and self.board[0] != "-":
+            self.winner = self.board[0]
+            return True
+        elif self.board[3] == self.board[4] == self.board[5] and self.board[3] != "-":
+            self.winner = self.board[3]
+            return True
+        elif self.board[6] == self.board[7] == self.board[8] and self.board[6] != "-":
+            self.winner = self.board[6]
+            return True
+        return False
+
+    def check_row(self):
+        if self.board[0] == self.board[3] == self.board[6] and self.board[0] != "-":
+            self.winner = self.board[0]
+            return True
+        elif self.board[1] == self.board[4] == self.board[7] and self.board[1] != "-":
+            self.winner = self.board[1]
+            return True
+        elif self.board[2] == self.board[5] == self.board[8] and self.board[2] != "-":
+            self.winner = self.board[2]
+            return True
+        return False
+
+    def check_diag(self):
+        if self.board[0] == self.board[4] == self.board[8] and self.board[0] != "-":
+            self.winner = self.board[0]
+            return True
+        elif self.board[2] == self.board[4] == self.board[6] and self.board[4] != "-":
+            self.winner = self.board[2]
+            return True
+        return False
+
+    def check_if_win(self):
+        if self.check_horizontal() or self.check_row() or self.check_diag():
+            self.print_board()
+            print(f"The winner is {self.winner}!")
+            self.gameRunning = False
+            exit()
+
+    def check_if_tie(self):
+        if "-" not in self.board:
+            self.print_board()
+            print("It's a tie!")
+            self.gameRunning = False
+
+    def switch_player(self):
+        if self.currentPlayer == "X":
+            self.currentPlayer = "O"
+        else:
+            self.currentPlayer = "X"
+
+    def play_game(self):
+        while self.gameRunning:
+            self.print_board()
+            self.player_input()
+            self.check_if_win()
+            self.check_if_tie()
+            self.switch_player()
+            self.check_if_win()
+            self.check_if_tie()
 
 
-board = ["-", "-", "-",
-        "-", "-", "-",
-        "-", "-", "-"]
-currentPlayer = "X"
-winner = None
-gameRunning = True
-
-# game board
-def printBoard(board):
-    print(board[0] + " | " + board[1] + " | " + board[2])
-    print("---------")
-    print(board[3] + " | " + board[4] + " | " + board[5])
-    print("---------")
-    print(board[6] + " | " + board[7] + " | " + board[8])
-
-
-# take player input
-def playerInput(board):
-    inp = int(input("Select a spot 1-9: "))
-    if board[inp-1] == "-":
-        board[inp-1] = currentPlayer
-    else:
-        print("Oops player is already at that spot.")
-
-
-# check for win or tie
-def checkHorizontle(board):
-    global winner
-    if board[0] == board[1] == board[2] and board[0] != "-":
-        winner = board[0]
-        return True
-    elif board[3] == board[4] == board[5] and board[3] != "-":
-        winner = board[3]
-        return True
-    elif board[6] == board[7] == board[8] and board[6] != "-":
-        winner = board[6]
-        return True
-
-def checkRow(board):
-    global winner
-    if board[0] == board[3] == board[6] and board[0] != "-":
-        winner = board[0]
-        return True
-    elif board[1] == board[4] == board[7] and board[1] != "-":
-        winner = board[1]
-        return True
-    elif board[2] == board[5] == board[8] and board[2] != "-":
-        winner = board[3]
-        return True
-
-
-def checkDiag(board):
-    global winner
-    if board[0] == board[4] == board[8] and board[0] != "-":
-        winner = board[0]
-        return True
-    elif board[2] == board[4] == board[6] and board[4] != "-":
-        winner = board[2]
-        return True
-
-
-def checkIfWin(board):
-    global gameRunning
-    if checkHorizontle(board):
-        printBoard(board)
-        print(f"The winner is {winner}!")
-        gameRunning = False
-
-    elif checkRow(board):
-        printBoard(board)
-        print(f"The winner is {winner}!")
-        gameRunning = False
-
-    elif checkDiag(board):
-        printBoard(board)
-        print(f"The winner is {winner}!")
-        gameRunning = False
-
-
-def checkIfTie(board):
-    global gameRunning
-    if "-" not in board:
-        printBoard(board)
-        print("It is a tie!")
-        gameRunning = False
-
-
-# switch player
-def switchPlayer():
-    global currentPlayer
-    if currentPlayer == "X":
-        currentPlayer = "O"
-    else:
-        currentPlayer = "X"
-
-
-def computer(board):
-    while currentPlayer == "O":
-        position = random.randint(0, 8)
-        if board[position] == "-":
-            board[position] = "O"
-            switchPlayer()
-
-
-while gameRunning:
-    printBoard(board)
-    playerInput(board)
-    checkIfWin(board)
-    checkIfTie(board)
-    switchPlayer()
-    computer(board)
-    checkIfWin(board)
-    checkIfTie(board)
+if __name__ == "__main__":
+    game = TicTacToe()
+    game.play_game()

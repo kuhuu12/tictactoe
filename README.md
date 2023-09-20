@@ -2,7 +2,9 @@
 This is the code for a simple tictactoe game made with python. This game can run on any IDE, I used VSCode.
 
 ## How to play
-In the game two players seek in alternate turns to complete a row, a column, or a diagonal with either three O's or three X's drawn in the spaces of a grid of nine squares. No pre-requisites to run the game. Game stops as soon as one player wins or a tie occurs.
+In the game two players seek in alternate turns to complete a row, a column, or a diagonal with either three O's or three X's drawn in the spaces of a grid of nine squares.   
+No pre-requisites to run the game.   
+Game stops as soon as one player wins or a tie occurs.
 For this specific game, please enter the numbers 1-9 to choose which grid box you want to place your marker in. Game starts with X.  
 ![image](https://github.com/kuhuu12/tictactoe/assets/86149458/e8c473e2-7873-4d4b-a222-66a2d6e6c436)      
 This can be used to understand the grid numbers.
